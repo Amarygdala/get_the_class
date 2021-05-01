@@ -111,7 +111,6 @@
                   <li>{{ x }}</li>
                 </ul>
                 {% endfor %}
-    <q>I love you the more in that I believe you had liked me for my own sake and for nothing else</q>
   </div>
 {% endfor %}
   <!-- Next/prev buttons -->
@@ -121,23 +120,10 @@
 
 <!-- Dots/bullets/indicators -->
 <div class="dot-container">
-  <span class="dot" onclick="currentSlide(1)"></span>
-  <span class="dot" onclick="currentSlide(2)"></span>
-  <span class="dot" onclick="currentSlide(3)"></span>
+  {% for i in range %}
+    <span class="dot" onclick="currentSlide(i)"></span>
+  {% endfor %}
 </div>
-
-
-
-              {% for key, value in DiC.items %}
-              <li>
-                {{ key }} : {% for x in value %}
-                <ul>
-                  <li>{{ x }}</li>
-                </ul>
-                {% endfor %}
-              </li>
-              {% endfor %}
-
         </div>
       </div>
     </section>
