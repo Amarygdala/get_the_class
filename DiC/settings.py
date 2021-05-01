@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'vtranscribe',
     'front_end',
     'rest_framework'
+    
 
 ]
 
