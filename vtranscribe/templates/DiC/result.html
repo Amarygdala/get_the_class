@@ -99,8 +99,35 @@
           </h3>
         </div>
 
-          <div class="col-md-12">
-            <div id="text" style="overflow: scroll; width:auto; height: 400px;">
+
+<!-- Slideshow container -->
+<div class="slideshow-container">
+{% for key, value in DiC.items %}
+  <!-- Full-width slides/quotes -->
+  <div class="mySlides">
+      <p class="author">{{ key }}: </p>
+      {% for x in value %}
+      <ul>
+                  <li>{{ x }}</li>
+                </ul>
+                {% endfor %}
+    <q>I love you the more in that I believe you had liked me for my own sake and for nothing else</q>
+  </div>
+{% endfor %}
+  <!-- Next/prev buttons -->
+  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
+
+<!-- Dots/bullets/indicators -->
+<div class="dot-container">
+  <span class="dot" onclick="currentSlide(1)"></span>
+  <span class="dot" onclick="currentSlide(2)"></span>
+  <span class="dot" onclick="currentSlide(3)"></span>
+</div>
+
+
+
               {% for key, value in DiC.items %}
               <li>
                 {{ key }} : {% for x in value %}
@@ -110,8 +137,7 @@
                 {% endfor %}
               </li>
               {% endfor %}
-            </div>
-          </div>
+
         </div>
       </div>
     </section>

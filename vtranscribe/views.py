@@ -25,7 +25,7 @@ credentials = service_account.Credentials.from_service_account_file(
 
 
 def transcribe(request):
-    """ 
+    
     gcs_uri = "gs://dict-131c6.appspot.com/audio/Parts of a cell-short.wav"
 
     id = gcs_uri.replace('gs://dict-131c6.appspot.com/audio/', '')
@@ -61,9 +61,8 @@ def transcribe(request):
             definition_list.append(newkey)
     DiC = {}
     for defi_word in definition_list:
-        DiC[defi_word] = dictionary.meaning(defi_word, True)["Noun"] """
-    return render(request, 'DiC/result.html',
-                  )
+        DiC[defi_word] = dictionary.meaning(defi_word, True)["Noun"]
+    return render(request, 'DiC/result.html', {"DiC":DiC})
 
 
 def home(request):
