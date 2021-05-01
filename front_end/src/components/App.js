@@ -7,7 +7,7 @@ export default class App extends Component {
   }
   
   render(){
-      return <h1>WOKRKSOKROSKROSO</h1>;
+      return <h1>s</h1>;
   }
 }
 
