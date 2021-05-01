@@ -2,7 +2,7 @@ endoplasmic reticulum
 ribosomes
 protein
 Golgi bodies
-membrane
+membranes
 vesicle
 lysosomes
 enzymes

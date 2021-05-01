@@ -1,6 +1,9 @@
 from django.shortcuts import render
-from django.http import Http404 #to call 404
 import pyrebase
+from google.oauth2 import service_account
+from google.cloud import speech
+from pydub import AudioSegment
+
 config = {
     "apiKey": "AIzaSyBNFiTW8_2AeQNQSxlEqBu1qrRKC5S-PKU",
     "authDomain": "dict-131c6.firebaseapp.com",
@@ -13,11 +16,63 @@ config = {
 firebase = pyrebase.initialize_app(config)
 authe = firebase.auth()
 database = firebase.database()
+storage = firebase.storage()
+credentials = service_account.Credentials.from_service_account_file(
+    'api-key.json')
+
+
+def transcribe(request):
+    gcs_uri = "gs://dict-131c6.appspot.com/audio/Parts of a cell-short.wav"
+
+    id = gcs_uri.replace('gs://dict-131c6.appspot.com/audio/', '')
+
+    client = speech.SpeechClient(credentials=credentials)
+
+    audio = speech.RecognitionAudio(uri=gcs_uri)
+
+    config = speech.RecognitionConfig(
+        encoding=speech.RecognitionConfig.AudioEncoding.ENCODING_UNSPECIFIED,
+        audio_channel_count=1,
+        enable_separate_recognition_per_channel=False,
+        language_code="en-US",
+    )
+
+    operation = client.long_running_recognize(config=config, audio=audio)
+
+    print("Waiting for operation to complete...")
+    response = operation.result(timeout=1000)
+
+    keywords = open('bio.txt', 'r')
+    keyword_list = keywords.readlines()
+    keywords.close()
+
+    transcript = ''
+    for result in response.results:
+        alternative = result.alternatives[0]
+        transcript += (alternative.transcript + '\n')
+
+    if any(ele in transcript for ele in keyword_list):
+        print('contains keyword')
+
+    for keyword in keyword_list:
+        if keyword in transcript:
+            print(keyword)
+
+    return render(request, 'DiC/result.html',
+                  {"transcript": transcript, "id": id})
 
 
 def home(request):
+    #  storage.child("image/pinksnail.png").download('../images', "downloaded.png")
+    #  storage.child("audio/Fly-like-a-raven.mp3").download('',
+    #                                                 "downloaded.mp3")
+
+    #   storage.child('image/redsnail.png').put('C:/Users/jwang/Pictures/snail/redsnail.png')
+
+    # Imports the Google Cloud client library
+
     name = database.child('Data').child('Name').get().val()
     id = database.child('Data').child('ID').get().val()
     project = database.child('Data').child('Project').get().val()
-    return render(request, "./DiC/index.html",
+    return render(request, "DiC/index.html",
                   {"name": name, "id": id, "project": project})

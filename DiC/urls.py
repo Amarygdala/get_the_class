@@ -19,5 +19,7 @@ from vtranscribe import views as vtranscribeV
 from front_end import views as front_endV
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', front_endV.index)
+    path('', front_endV.index),
+    path('transcribe/', vtranscribeV.transcribe),
+    path('index/', vtranscribeV.home) #dev test
 ]
