@@ -62,7 +62,7 @@ def transcribe(request):
     for defi_word in definition_list:
         DiC[defi_word] = dictionary.meaning(defi_word, True)["Noun"]
     return render(request, 'DiC/result.html',
-                  {"transcript": DiC, "id": id})
+                  {"DiC": DiC, "id": id})
 
 
 def home(request):

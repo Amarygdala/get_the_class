@@ -14,8 +14,17 @@ Video Id is: {{ id }}
     </h2>
 <br>
 <h3>
-Transcript: {{ transcript }}
-    </h3>
+Transcript: 
+</h3>
+{% for key, value in DiC.items %}
+  <li>{{ key }} : 
+        {% for x in value %}
+        <ul>
+            <li>{{ x }}</li>
+        </ul>  
+        {% endfor %}
+  </li>
+{% endfor %}
 <br>
 </body>
 </html>
