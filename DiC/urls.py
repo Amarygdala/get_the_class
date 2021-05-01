@@ -15,11 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from vtranscribe import views as vtranscribeV
-from front_end import views as front_endV
+from vtranscribe import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', front_endV.index),
-    path('transcribe/', vtranscribeV.transcribe),
-    path('index/', vtranscribeV.home) #dev test
+    path('', views.home),
+    path('transcribe/', views.transcribe),
 ]
