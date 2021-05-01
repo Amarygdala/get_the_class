@@ -10616,8 +10616,8 @@ body {
 
 .drag-area{
   border: 2px dashed #fff;
-  height: 500px;
-  width: 700px;
+  height: 100%;
+  width: auto;
   border-radius: 5px;
   display: flex;
   align-items: center;
