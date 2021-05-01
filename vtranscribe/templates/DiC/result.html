@@ -72,18 +72,10 @@
               Your browser does not support the video tag.
             </video>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4 text-left">
             <h3 style="color: white">Transcript:</h3>
             <div id="text" style="overflow: scroll; height: 400px">
-              {% for key, value in DiC.items %}
-              <li>
-                {{ key }} : {% for x in value %}
-                <ul>
-                  <li>{{ x }}</li>
-                </ul>
-                {% endfor %}
-              </li>
-              {% endfor %}
+              {{transcript}}
             </div>
           </div>
         </div>
@@ -105,9 +97,9 @@
 {% for key, value in DiC.items %}
   <!-- Full-width slides/quotes -->
   <div class="mySlides">
-      <p class="author">{{ key }}: </p>
+      <p class="author" style="font-size: 28px; text-transform: uppercase;">{{ key }} </p>
       {% for x in value %}
-      <ul>
+      <ul style="text-align: left; text-transform: capitalize;">
                   <li>{{ x }}</li>
                 </ul>
                 {% endfor %}
