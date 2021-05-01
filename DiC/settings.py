@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'vtranscribe'
+    'vtranscribe',
+    'front_end',
+    'rest_framework'
+
 ]
 
 MIDDLEWARE = [
