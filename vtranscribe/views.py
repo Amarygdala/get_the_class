@@ -3,6 +3,9 @@ import pyrebase
 from google.oauth2 import service_account
 from google.cloud import speech
 from pydub import AudioSegment
+from PyDictionary import PyDictionary
+
+dictionary=PyDictionary()
 
 config = {
     "apiKey": "AIzaSyBNFiTW8_2AeQNQSxlEqBu1qrRKC5S-PKU",
@@ -49,17 +52,17 @@ def transcribe(request):
     transcript = ''
     for result in response.results:
         alternative = result.alternatives[0]
-        transcript += (alternative.transcript + '\n')
-
-    if any(ele in transcript for ele in keyword_list):
-        print('contains keyword')
-
+        transcript += (alternative.transcript)
+    definition_list = []
     for keyword in keyword_list:
-        if keyword in transcript:
-            print(keyword)
-
+        newkey = keyword.replace('\n', '')
+        if newkey in transcript:
+            definition_list.append(newkey)
+    DiC = {}
+    for defi_word in definition_list:
+        DiC[defi_word] = dictionary.meaning(defi_word, True)["Noun"]
     return render(request, 'DiC/result.html',
-                  {"transcript": transcript, "id": id})
+                  {"transcript": DiC, "id": id})
 
 
 def home(request):
