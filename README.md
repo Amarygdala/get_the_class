@@ -1,6 +1,6 @@
-# Foobar
+# Proxy Lecturer
 
-Foobar is a Python library for dealing with word pluralization.
+Proxy Lecturer is a django app that helps you study.
 
 ## Installation
 You can run our project on local django server. (Be aware that you'll need ur own API key and Firebase integration)
