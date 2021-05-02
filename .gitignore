@@ -5,3 +5,5 @@ db.sqlite3
 *.pyc
 *.iml
 *.xml
+*.pyc
+*.sqlite3
