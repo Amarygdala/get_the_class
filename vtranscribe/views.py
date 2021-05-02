@@ -34,7 +34,7 @@ name = ''
 
 def transcribe(request):
 
-    storage.child("video/Parts_of_a_cell-short.mp4").download(
+    storage.child("video/Parts_of_a_cell_Trim.mp4").download(
         '/media/videos/', 'download.mp4')
 
     gcs_uri = "gs://dict-131c6.appspot.com/audio/Parts of a cell-short.wav"
@@ -83,8 +83,7 @@ def transcribe(request):
     for defi_word in definition_list:
         DiC[defi_word] = dictionary.meaning(defi_word, True)["Noun"]
 
-        video = Video.objects.last()
-        print(video.name)
+    video = Video.objects.last()
 
     return render(request, 'DiC/result.html',
                   {"DiC": DiC, 'range': range(len(DiC)),
