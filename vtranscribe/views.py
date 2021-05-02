@@ -10,6 +10,7 @@ from django.http import JsonResponse
 from vtranscribe.models import Video
 from django.views.generic import TemplateView
 from vtranscribe.forms import VideoForm
+from DiC.settings import MEDIA_ROOT
 
 dictionary = PyDictionary()
 
@@ -28,9 +29,14 @@ database = firebase.database()
 storage = firebase.storage()
 credentials = service_account.Credentials.from_service_account_file(
     'api-key.json')
+name = ''
 
 
 def transcribe(request):
+
+    storage.child("video/Parts_of_a_cell-short.mp4").download(
+        '/media/videos/', 'download.mp4')
+
     gcs_uri = "gs://dict-131c6.appspot.com/audio/Parts of a cell-short.wav"
 
     id = gcs_uri.replace('gs://dict-131c6.appspot.com/audio/', '')
@@ -58,7 +64,6 @@ def transcribe(request):
         keyword_list[i] = keyword_list[i].replace("\n", '')
     keywords.close()
 
-
     transcript = ''
     timestamps = {}
     definition_list = []
@@ -68,15 +73,24 @@ def transcribe(request):
         for word_info in alternative.words:
             word = word_info.word
             start_time = word_info.start_time
-            print(word)
+            # print(word)
             if word in keyword_list:
                 if word not in timestamps:
-                    timestamps[word] = str(start_time.seconds + start_time.microseconds * 1e-9)
+                    timestamps[word] = str(
+                        start_time.seconds + start_time.microseconds * 1e-9)
                     definition_list.append(word)
     DiC = {}
     for defi_word in definition_list:
         DiC[defi_word] = dictionary.meaning(defi_word, True)["Noun"]
-    return render(request, 'DiC/result.html', {"DiC":DiC, 'range': range(len(DiC)), 'transcript': transcript, 'timestamps': timestamps})
+
+        video = Video.objects.last()
+        print(video.name)
+
+    return render(request, 'DiC/result.html',
+                  {"DiC": DiC, 'range': range(len(DiC)),
+                   'transcript': transcript, 'timestamps': timestamps,
+                   'video': video})
+
 
 class MainView(TemplateView):
     template_name = 'DiC/index.html'
@@ -86,11 +100,19 @@ def file_upload_view(request):
     # print(request.FILES)
     if request.method == 'POST':
         my_file = request.FILES.get('file')
-        Video.objects.create(name='download', videofile=my_file)
+        vid = Video.objects.create(name='download', videofile=my_file)
+        print(type(vid.videofile))
+        print(type(vid.name))
+        print(vid.name)
+
+        if my_file is None:
+            return redirect('transcribe/')
+        else:
+            storage.child('video/' + my_file.name.replace(' ', '_')).put(
+                MEDIA_ROOT + '\\videos\\' + my_file.name.replace(' ', '_'))
+
         return redirect('transcribe/')
-    return JsonResponse({'upload':'false'})
-
-
+    return JsonResponse({'upload': 'false'})
 
 
 def home(request):
@@ -104,7 +126,6 @@ def home(request):
 
     lastvideo = Video.objects.last()
     videofile = lastvideo.videofile
-
 
     context = {'videofile': videofile,
                'form': form
