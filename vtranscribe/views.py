@@ -4,7 +4,9 @@ from google.oauth2 import service_account
 from google.cloud import speech
 from pydub import AudioSegment
 from PyDictionary import PyDictionary
-
+from django.http import JsonResponse
+from vtranscribe.models import Video
+from django.views.generic import TemplateView
 dictionary=PyDictionary()
 
 config = {
@@ -73,6 +75,17 @@ def transcribe(request):
         DiC[defi_word] = dictionary.meaning(defi_word, True)["Noun"]
     return render(request, 'DiC/result.html', {"DiC":DiC, 'range': range(len(DiC)), 'transcript': transcript, 'timestamps': timestamps})
 
+class MainView(TemplateView):
+    template_name = 'DiC/index.html'
+
+
+def file_upload_view(request):
+    # print(request.FILES)
+    if request.method == 'POST':
+        my_file = request.FILES.get('file')
+        Video.objects.create(name='download', videofile=my_file)
+        return render(request, "DiC/result.html")
+    return JsonResponse({'upload':'false'})
 
 def home(request):
     #  storage.child("image/pinksnail.png").download('../images', "downloaded.png")
