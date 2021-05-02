@@ -8,7 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.MainView.as_view(), name='main-view'),
     path('upload/', views.file_upload_view, name='upload-view'),
-    path('transcribe/', views.transcribe),
+    path('upload/transcribe/', views.transcribe),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

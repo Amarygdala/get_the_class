@@ -87,8 +87,11 @@ def file_upload_view(request):
     if request.method == 'POST':
         my_file = request.FILES.get('file')
         Video.objects.create(name='download', videofile=my_file)
-        return render(request, "DiC/result.html")
+        return redirect('transcribe/')
     return JsonResponse({'upload':'false'})
+
+
+
 
 def home(request):
     #  storage.child("image/pinksnail.png").download('../images', "downloaded.png")
