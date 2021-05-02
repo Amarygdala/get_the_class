@@ -15,4 +15,4 @@ pip install -r requiremnents.txt
 
 ## Authors and Acknowledgement
 
-Foobar is a Python library for dealing with word pluralization.
+[dropzone js](https://www.dropzonejs.com/#layout)
