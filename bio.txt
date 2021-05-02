@@ -7,7 +7,7 @@ vesicle
 lysosomes
 enzymes
 lytic vacuoles
-organelle
+organelles
 vacuole
 photosynthesis
 respiration

@@ -9,7 +9,7 @@
     />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Agency - Start Bootstrap Theme</title>
+    <title>Proxy Lecturer</title>
     <link
       rel="icon"
       type="image/x-icon"
@@ -38,30 +38,43 @@
       href="{% static '/css/styles.css' %}"
     />
   </head>
+
   <body id="page-top">
     <!-- Masthead-->
-    <header class="masthead">
-      <div class="container">
-        <div class="masthead-subheading">Welcome To Our Studio!</div>
-        <div class="masthead-heading text-uppercase">It's Nice To Meet You</div>
-        <a
-          class="btn btn-primary btn-xl text-uppercase js-scroll-trigger"
-          href="#services"
-          >Start Conversion</a
-        >
+    <header>
+      <div class="overlay"></div>
+      <video
+        playsinline="playsinline"
+        autoplay="autoplay"
+        muted="muted"
+        loop="loop"
+      >
+        <source
+          src="{% static '/pexels-rodnae-productions-7092068.mp4' %}"
+          type="video/mp4"
+        />
+      </video>
+      <div class="container h-100">
+        <div class="d-flex h-100 text-center align-items-center">
+          <div class="w-100 text-white">
+            <h1 class="display-3">Proxy Lecturer</h1>
+            <p class="lead mb-0">Cram for Exam!</p>
+            <br /><br />
+            <a
+              class="btn btn-primary btn-xl text-uppercase js-scroll-trigger"
+              href="#services"
+              >Start Conversion</a
+            >
+          </div>
+        </div>
       </div>
     </header>
+
     <!-- Services-->
 
 
     <section class="page-section" id="services">
       <div class="container">
-        <div class="text-center">
-          <h2 class="section-heading text-uppercase">Services</h2>
-          <h3 class="section-subheading text-muted">
-            Lorem ipsum dolor sit amet consectetur.
-          </h3>
-        </div>
         <div class="row text-center">
           <div class="col-md-6">
           <h3 style="color:white;">Video:</h3>
@@ -84,12 +97,8 @@
                 {{ key }} : {% for x in value %}
                 <ul>
                   <li>{{ x }}</li>
-                </ul>
                 {% endfor %}
               </li>
-              {% endfor %}
-            </div>
-          </div>
         </div>
       </div>
     </section>
@@ -98,8 +107,8 @@
     <footer class="footer py-4">
       <div class="container">
         <div class="row align-items-center">
-          <div class="col-lg-4 text-lg-left">
-            Copyright &copy; Your Website
+          <div class="col-lg-4 text-lg-left" style="color: orange">
+            Copyright &copy; Cringe Central
             <!-- This script automatically adds the current year to your website footer-->
             <!-- (credit: https://updateyourfooter.com/)-->
             <script>
