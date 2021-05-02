@@ -6,5 +6,5 @@ class Video(models.Model):
     videofile = models.FileField(upload_to='videos/', null=True,
                                  verbose_name="")
 
-    def str(self):
+    def __str__(self):
         return str(self.videofile)
