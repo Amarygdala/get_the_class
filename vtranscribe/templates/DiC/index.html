@@ -52,6 +52,8 @@
       </div>
     </header>
     <!-- Services-->
+
+
     <section class="page-section" id="services">
       <div class="container">
         <div class="text-center">
@@ -64,16 +66,17 @@
           <div class="col-md-6">
           <h3 style="color:white;">Video:</h3>
             <div class="drag-area"><!--drag and drop video upload-->
-                <div class="icon"><i class="fas fa-cloud-upload-alt"></i></div>
-                <header>Drag & Drop to Upload File</header>
-                <span>OR</span>
-                <button>Browse File</button>
-                <input type="file" hidden>
+                <br><br>
+                <form action="upload/" method="POST" class="dropzone dz">
+                    {% csrf_token %}
+                    <div class="fallback">
+                        <input name="file" type="file" multiple />
+                    </div>
+                </form>
             </div>
-            <br />
+            <br><br>
           </div>
           <div class="col-md-4">
-
             <h3 style="color:white;">Transcript:</h3>
             <div id="text" style="overflow:scroll; height:400px;">
               {% for key, value in DiC.items %}
@@ -118,5 +121,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <!-- Core theme JS-->
     <script src="{% static '/js/scripts.js' %}"></script>
+  <!-- dropzone js & css-->
+    <script src="https://rawgit.com/enyo/dropzone/master/dist/dropzone.js"></script>
+    <link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
   </body>
 </html>

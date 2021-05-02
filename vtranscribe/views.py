@@ -1,11 +1,16 @@
-from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, redirect
 import pyrebase
+from django.views.generic import TemplateView
 from google.oauth2 import service_account
 from google.cloud import speech
 from pydub import AudioSegment
 from PyDictionary import PyDictionary
 
-dictionary=PyDictionary()
+from vtranscribe.forms import VideoForm
+from vtranscribe.models import Video
+
+dictionary = PyDictionary()
 
 config = {
     "apiKey": "AIzaSyBNFiTW8_2AeQNQSxlEqBu1qrRKC5S-PKU",
@@ -25,7 +30,6 @@ credentials = service_account.Credentials.from_service_account_file(
 
 
 def transcribe(request):
-    
     gcs_uri = "gs://dict-131c6.appspot.com/audio/Parts of a cell-short.wav"
 
     id = gcs_uri.replace('gs://dict-131c6.appspot.com/audio/', '')
@@ -62,7 +66,23 @@ def transcribe(request):
     DiC = {}
     for defi_word in definition_list:
         DiC[defi_word] = dictionary.meaning(defi_word, True)["Noun"]
-    return render(request, 'DiC/result.html', {"DiC":DiC, 'range': range(len(DiC))})
+    return render(request, 'DiC/result.html',
+                  {"DiC": DiC, 'range': range(len(DiC))})
+
+
+class MainView(TemplateView):
+    template_name = 'DiC/index.html'
+
+
+def file_upload_view(request):
+    # print(request.FILES)
+    if request.method == 'POST':
+        my_file = request.FILES.get('file')
+        Video.objects.create(name='download', videofile=my_file)
+
+        print('ighf')
+        return render(request, "DiC/result.html")
+    return JsonResponse({'upload':'false'})
 
 
 def home(request):
@@ -74,8 +94,12 @@ def home(request):
 
     # Imports the Google Cloud client library
 
-    name = database.child('Data').child('Name').get().val()
-    id = database.child('Data').child('ID').get().val()
-    project = database.child('Data').child('Project').get().val()
-    return render(request, "DiC/index.html",
-                  {"name": name, "id": id, "project": project})
+    lastvideo = Video.objects.last()
+    videofile = lastvideo.videofile
+
+
+    context = {'videofile': videofile,
+               'form': form
+               }
+
+    return render(request, "DiC/index.html", context)
