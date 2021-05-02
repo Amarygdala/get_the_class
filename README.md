@@ -11,7 +11,7 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the pac
 pip install -r requiremnents.txt
 ```
 start the server with
-```python
+```bash
 python manage.py runserver
 ```
 
