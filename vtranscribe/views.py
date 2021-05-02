@@ -39,6 +39,7 @@ def transcribe(request):
         audio_channel_count=1,
         enable_separate_recognition_per_channel=False,
         language_code="en-US",
+        enable_word_time_offsets=True,
     )
 
     operation = client.long_running_recognize(config=config, audio=audio)
@@ -48,21 +49,29 @@ def transcribe(request):
 
     keywords = open('bio.txt', 'r')
     keyword_list = keywords.readlines()
+    for i in range(len(keyword_list)):
+        keyword_list[i] = keyword_list[i].replace("\n", '')
     keywords.close()
 
+
     transcript = ''
+    timestamps = {}
+    definition_list = []
     for result in response.results:
         alternative = result.alternatives[0]
         transcript += (alternative.transcript)
-    definition_list = []
-    for keyword in keyword_list:
-        newkey = keyword.replace('\n', '')
-        if newkey in transcript:
-            definition_list.append(newkey)
+        for word_info in alternative.words:
+            word = word_info.word
+            start_time = word_info.start_time
+            print(word)
+            if word in keyword_list:
+                if word not in timestamps:
+                    timestamps[word] = str(start_time.seconds + start_time.microseconds * 1e-9)
+                    definition_list.append(word)
     DiC = {}
     for defi_word in definition_list:
         DiC[defi_word] = dictionary.meaning(defi_word, True)["Noun"]
-    return render(request, 'DiC/result.html', {"DiC":DiC, 'range': range(len(DiC)), 'transcript': transcript})
+    return render(request, 'DiC/result.html', {"DiC":DiC, 'range': range(len(DiC)), 'transcript': transcript, 'timestamps': timestamps})
 
 
 def home(request):

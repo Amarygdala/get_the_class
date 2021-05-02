@@ -9,7 +9,7 @@
     />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Agency - Start Bootstrap Theme</title>
+    <title>Proxy Lecturer</title>
     <link
       rel="icon"
       type="image/x-icon"
@@ -103,6 +103,11 @@
                   <li>{{ x }}</li>
                 </ul>
                 {% endfor %}
+      Time: {% for x, time in timestamps.items %}
+                {% if x == key %}
+                  {{time|add:" seconds"}}
+                {% endif %}
+      {% endfor %}
   </div>
 {% endfor %}
   <!-- Next/prev buttons -->
