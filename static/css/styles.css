@@ -47,6 +47,16 @@
   box-sizing: border-box;
 }
 
+.dz {
+      border: dashed !important;
+      border-color: #ccc !important;
+      border-radius: 10px !important;
+}
+
+.dz:hover {
+      background-color: aliceblue !important;
+}
+
 html {
   font-family: sans-serif;
   line-height: 1.15;
