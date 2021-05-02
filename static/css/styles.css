@@ -159,13 +159,13 @@ sup {
 }
 
 a {
-  color: #fed136;
+  color: cornflowerblue;
   text-decoration: none;
   background-color: transparent;
 }
 a:hover {
-  color: #e6b301;
-  text-decoration: underline;
+  color: rgb(67, 133, 255);
+  text-decoration: none;
 }
 
 a:not([href]):not([class]) {
@@ -10730,3 +10730,4 @@ q {font-style: italic;}
 
 /* Add a blue color to the author */
 .author {color: cornflowerblue;}
+
