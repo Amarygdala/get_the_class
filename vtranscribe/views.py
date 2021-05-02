@@ -90,22 +90,6 @@ def file_upload_view(request):
         return render(request, "DiC/result.html")
     return JsonResponse({'upload':'false'})
 
-class MainView(TemplateView):
-    template_name = 'DiC/index.html'
-
-
-def file_upload_view(request):
-    # print(request.FILES)
-    if request.method == 'POST':
-        my_file = request.FILES.get('file')
-        Video.objects.create(name='download', videofile=my_file)
-
-        print('ighf')
-        return render(request, "DiC/result.html")
-    return JsonResponse({'upload':'false'})
-    
-
-
 def home(request):
     #  storage.child("image/pinksnail.png").download('../images', "downloaded.png")
     #  storage.child("audio/Fly-like-a-raven.mp3").download('',
