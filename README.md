@@ -8,7 +8,7 @@ You can run our project on local django server. (Be aware that you'll need ur ow
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the packages in requirements.txt.
 
 ```bash
-pip install -r requiremnents.txt
+pip install -r requirements.txt
 ```
 start the server with
 ```bash
